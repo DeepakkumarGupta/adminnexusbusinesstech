@@ -49,21 +49,38 @@ export default function AdminPanel() {
     }
   }, [adminUser, activeView])
 
+  // const fetchUsers = async () => {
+  //   try {
+  //     const response = await fetch('http://localhost:5000/admin/users', {
+  //       credentials: 'include',
+  //     })
+  //     if (response.ok) {
+  //       const data = await response.json()
+  //       setUsers(data)
+  //     } else {
+  //       console.error('Failed to fetch users')
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching users:', error)
+  //   }
+  // }
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:5000/admin/users', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/users`, {
         credentials: 'include',
       })
       if (response.ok) {
         const data = await response.json()
         setUsers(data)
       } else {
-        console.error('Failed to fetch users')
+        const errorData = await response.json()
+        console.error('Failed to fetch users:', errorData)
       }
     } catch (error) {
       console.error('Error fetching users:', error)
     }
   }
+
 
   const handleLogout = () => {
     localStorage.removeItem('adminUser')
