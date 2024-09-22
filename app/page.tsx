@@ -258,7 +258,7 @@ export default function AdminPanel() {
               Welcome, {adminUser.username}!
             </h2>
             <p className="text-muted-foreground mt-2">
-              Let's get going! You're logged in as {adminUser.email}.
+              Lets get going! Youre logged in as {adminUser.email}.
             </p>
           </div>
         )}
