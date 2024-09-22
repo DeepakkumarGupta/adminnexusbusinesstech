@@ -34,14 +34,16 @@ export default function AdminPanel() {
   const router = useRouter()
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('adminUser')
+    const storedUser = localStorage.getItem('adminUser');
     if (storedUser) {
-      setAdminUser(JSON.parse(storedUser))
+      setAdminUser(JSON.parse(storedUser));
     } else {
-      router.push('/login')
+      router.push('/login');
     }
-    setIsLoading(false)
-  }, [router])
+    setIsLoading(false);
+  }, [router]);
+
+
 
   useEffect(() => {
     if (adminUser && activeView === 'users') {
