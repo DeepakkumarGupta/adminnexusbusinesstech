@@ -1,83 +1,172 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useAuth } from '@/contexts/AuthContext'
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
+import { useToast } from "@/hooks/use-toast"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { EyeIcon, EyeOffIcon, LockIcon, MailIcon } from 'lucide-react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { motion } from 'framer-motion'
+import nbtlogo from '@/public/nbtlogo.svg'
 
 export default function LoginPage() {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
+    const [error, setError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const [loginError, setLoginError] = useState<string | null>(null)
-    const router = useRouter()
+    const { login } = useAuth()
+    const { toast } = useToast()
 
-    const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
         setIsLoading(true)
-        setLoginError(null)
-
-        const formData = new FormData(event.currentTarget)
-        const email = formData.get('email') as string
-        const password = formData.get('password') as string
-
+        setError('')
         try {
-            const response = await fetch('http://localhost:5000/auth/admin/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-                credentials: 'include',
+            await login(email, password)
+            toast({
+                title: "Login Successful",
+                description: "Welcome back to Nexus Business Tech.",
             })
-
-            if (response.ok) {
-                const data = await response.json()
-                if (data.isAdmin) {
-                    localStorage.setItem('adminUser', JSON.stringify(data))
-                    router.push('/') // Redirect to home page (admin panel) after successful login
-                } else {
-                    setLoginError('You do not have admin privileges.')
-                }
-            } else {
-                setLoginError('Invalid email or password.')
-            }
         } catch (error) {
-            console.error('Login error:', error)
-            setLoginError('An error occurred during login. Please try again.')
+            if (error instanceof Error) {
+                setError(error.message)
+            } else {
+                setError('An unexpected error occurred. Please try again.')
+            }
         } finally {
             setIsLoading(false)
         }
     }
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-background">
-            <div className="p-8 bg-card rounded shadow-md w-full max-w-md">
-                <h1 className="mb-4 text-2xl font-bold text-center text-card-foreground">Admin Login</h1>
-                <form onSubmit={handleLogin} className="space-y-4">
-                    <input
-                        name="email"
-                        type="email"
-                        placeholder="Email"
-                        required
-                        className="w-full px-3 py-2 border rounded-md bg-background text-foreground"
-                    />
-                    <input
-                        name="password"
-                        type="password"
-                        placeholder="Password"
-                        required
-                        className="w-full px-3 py-2 border rounded-md bg-background text-foreground"
-                    />
-                    <button
-                        type="submit"
-                        className={`w-full px-4 py-2 text-white bg-primary rounded-md hover:bg-primary/90 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''
-                            }`}
-                        disabled={isLoading}
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 px-4">
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                <Card className="w-full max-w-md overflow-hidden">
+                    <motion.div
+                        initial={{ y: -50, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.2, duration: 0.5 }}
                     >
-                        {isLoading ? 'Logging in...' : 'Login'}
-                    </button>
-                </form>
-                {loginError && (
-                    <p className="mt-4 text-sm text-destructive">{loginError}</p>
-                )}
-            </div>
+                        <CardHeader className="space-y-1">
+                            <div className="flex items-center justify-center mb-4">
+                                <motion.div
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                >
+                                    <Image
+                                        src={nbtlogo}
+                                        alt="Nexus Business Tech Logo"
+                                        width={77}
+                                        height={60}
+                                        className="rounded-md"
+                                    />
+                                </motion.div>
+                            </div>
+                            <CardTitle className="text-2xl font-bold text-center">Login to Your Account</CardTitle>
+                            <CardDescription className="text-center">
+                                Enter your email and password to access the admin panel
+                            </CardDescription>
+                        </CardHeader>
+                    </motion.div>
+                    <CardContent>
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <motion.div
+                                className="space-y-2"
+                                initial={{ x: -50, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                transition={{ delay: 0.3, duration: 0.5 }}
+                            >
+                                <label htmlFor="email" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                    Email
+                                </label>
+                                <div className="relative">
+                                    <MailIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="pl-10"
+                                        placeholder="Enter your email"
+                                        required
+                                    />
+                                </div>
+                            </motion.div>
+                            <motion.div
+                                className="space-y-2"
+                                initial={{ x: 50, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                transition={{ delay: 0.4, duration: 0.5 }}
+                            >
+                                <label htmlFor="password" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                    Password
+                                </label>
+                                <div className="relative">
+                                    <LockIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                                    <Input
+                                        id="password"
+                                        type={showPassword ? "text" : "password"}
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="pl-10 pr-10"
+                                        placeholder="Enter your password"
+                                        required
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                                    >
+                                        {showPassword ? <EyeOffIcon size={18} /> : <EyeIcon size={18} />}
+                                    </button>
+                                </div>
+                            </motion.div>
+                            {error && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    <Alert variant="destructive">
+                                        <AlertDescription>{error}</AlertDescription>
+                                    </Alert>
+                                </motion.div>
+                            )}
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.5, duration: 0.5 }}
+                            >
+                                <Button type="submit" className="w-full" disabled={isLoading}>
+                                    {isLoading ? "Logging in..." : "Log In"}
+                                </Button>
+                            </motion.div>
+                        </form>
+                    </CardContent>
+                    <CardFooter className="flex flex-col space-y-4">
+                        <motion.div
+                            className="text-sm text-center text-gray-500 dark:text-gray-400"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.6, duration: 0.5 }}
+                        >
+                            Don't have an account?{" "}
+                            <Link href="/contact" className="font-semibold text-primary hover:underline">
+                                Contact us
+                            </Link>
+                        </motion.div>
+                    </CardFooter>
+                </Card>
+            </motion.div>
         </div>
     )
 }
