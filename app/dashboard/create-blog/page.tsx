@@ -25,7 +25,7 @@ export default function CreateBlogPage() {
         e.preventDefault()
         setIsLoading(true)
         const blogData = { title, content, excerpt, image }
-        const url = 'http://localhost:5000/blog/post'
+        const url = `${process.env.NEXT_PUBLIC_API_URL}/blog/post`
 
         try {
             const response = await fetchWithAuth(url, {

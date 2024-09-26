@@ -31,7 +31,7 @@ export default function EditBlogPage({ params }: { params: { id: string } }) {
     const fetchBlogData = async (id: string) => {
         setIsFetching(true)
         try {
-            const response = await fetchWithAuth(`http://localhost:5000/blogs/${id}`)
+            const response = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_URL}/blogs/${id}`)
             if (response.ok) {
                 const blogData = await response.json()
                 setTitle(blogData.title || '')
@@ -61,7 +61,7 @@ export default function EditBlogPage({ params }: { params: { id: string } }) {
         e.preventDefault()
         setIsLoading(true)
         const blogData = { title, content, excerpt, image }
-        const url = `http://localhost:5000/blog/edit/${params.id}`
+        const url = `${process.env.NEXT_PUBLIC_API_URL}/blog/edit/${params.id}`
 
         try {
             const response = await fetchWithAuth(url, {
