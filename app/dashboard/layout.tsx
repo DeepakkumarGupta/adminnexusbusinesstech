@@ -27,6 +27,7 @@ export default function DashboardLayout({
     const navigation = [
         { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
         { name: 'Members', href: '/dashboard/members', icon: Users },
+        { name: 'Blogs', href: '/dashboard/create-blog', icon: FileText },
         { name: 'Settings', href: '/dashboard/settings', icon: Settings },
     ]
 
@@ -109,6 +110,22 @@ export default function DashboardLayout({
                                 </Link>
                             ))}
                         </nav>
+                    </div>
+                    <div className="flex-shrink-0 flex border-t border-gray-200 dark:border-gray-700 p-4">
+                        <div className="flex items-center">
+                            <div>
+                                <p className="text-sm font-medium text-gray-700 dark:text-gray-200">{user?.username}</p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">{user?.email}</p>
+                            </div>
+                            <Button
+                                onClick={logout}
+                                variant="ghost"
+                                size="icon"
+                                className="ml-auto"
+                            >
+                                <LogOut className="h-5 w-5" />
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>
