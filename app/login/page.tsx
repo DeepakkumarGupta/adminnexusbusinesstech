@@ -159,8 +159,8 @@ export default function LoginPage() {
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.6, duration: 0.5 }}
                         >
-                            Don't have an account?{" "}
-                            <Link href="/contact" className="font-semibold text-primary hover:underline">
+                            Dont have an account?{" "}
+                            <Link href="/" className="font-semibold text-primary hover:underline">
                                 Contact us
                             </Link>
                         </motion.div>
