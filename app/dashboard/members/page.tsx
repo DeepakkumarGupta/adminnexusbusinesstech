@@ -169,12 +169,81 @@ export default function UserManagement() {
                                     <SelectValue placeholder="Select a role" />
                                 </SelectTrigger>
                                 <SelectContent>
+                                    {/* Software Engineering Roles */}
                                     <SelectItem value="Software Engineer">Software Engineer</SelectItem>
+                                    <SelectItem value="Frontend Developer">Frontend Developer</SelectItem>
+                                    <SelectItem value="Backend Developer">Backend Developer</SelectItem>
+                                    <SelectItem value="Full Stack Developer">Full Stack Developer</SelectItem>
+                                    <SelectItem value="DevOps Engineer">DevOps Engineer</SelectItem>
+                                    <SelectItem value="Mobile App Developer">Mobile App Developer</SelectItem>
+                                    <SelectItem value="Data Scientist">Data Scientist</SelectItem>
+                                    <SelectItem value="Machine Learning Engineer">Machine Learning Engineer</SelectItem>
+                                    <SelectItem value="QA Engineer">QA Engineer</SelectItem>
+                                    <SelectItem value="Security Engineer">Security Engineer</SelectItem>
+                                    <SelectItem value="Blockchain Developer">Blockchain Developer</SelectItem>
+                                    <SelectItem value="AI Engineer">AI Engineer</SelectItem>
+
+                                    {/* Digital Marketing Roles */}
                                     <SelectItem value="Digital Marketer">Digital Marketer</SelectItem>
-                                    <SelectItem value="Product Manager">Product Manager</SelectItem>
+                                    <SelectItem value="SEO Specialist">SEO Specialist</SelectItem>
+                                    <SelectItem value="Content Marketer">Content Marketer</SelectItem>
+                                    <SelectItem value="Social Media Manager">Social Media Manager</SelectItem>
+                                    <SelectItem value="PPC Specialist">PPC Specialist</SelectItem>
+                                    <SelectItem value="Email Marketing Specialist">Email Marketing Specialist</SelectItem>
+                                    <SelectItem value="Growth Marketer">Growth Marketer</SelectItem>
+                                    <SelectItem value="Affiliate Marketer">Affiliate Marketer</SelectItem>
+                                    <SelectItem value="Marketing Analyst">Marketing Analyst</SelectItem>
+
+                                    {/* Design Roles */}
                                     <SelectItem value="Designer">Designer</SelectItem>
+                                    <SelectItem value="UI/UX Designer">UI/UX Designer</SelectItem>
+                                    <SelectItem value="Graphic Designer">Graphic Designer</SelectItem>
+                                    <SelectItem value="Product Designer">Product Designer</SelectItem>
+                                    <SelectItem value="Interaction Designer">Interaction Designer</SelectItem>
+                                    <SelectItem value="Web Designer">Web Designer</SelectItem>
+                                    <SelectItem value="Creative Director">Creative Director</SelectItem>
+                                    <SelectItem value="Motion Graphics Designer">Motion Graphics Designer</SelectItem>
+                                    <SelectItem value="Illustrator">Illustrator</SelectItem>
+
+                                    {/* Product & Project Management Roles */}
+                                    <SelectItem value="Product Manager">Product Manager</SelectItem>
+                                    <SelectItem value="Project Manager">Project Manager</SelectItem>
+                                    <SelectItem value="Scrum Master">Scrum Master</SelectItem>
+                                    <SelectItem value="Business Analyst">Business Analyst</SelectItem>
+
+                                    {/* Other Related Roles */}
+                                    <SelectItem value="Technical Writer">Technical Writer</SelectItem>
+                                    <SelectItem value="IT Support Specialist">IT Support Specialist</SelectItem>
+                                    <SelectItem value="System Administrator">System Administrator</SelectItem>
+                                    <SelectItem value="Database Administrator">Database Administrator</SelectItem>
+                                    <SelectItem value="Cloud Engineer">Cloud Engineer</SelectItem>
+                                    <SelectItem value="Sales Engineer">Sales Engineer</SelectItem>
+                                    <SelectItem value="Content Strategist">Content Strategist</SelectItem>
+                                    <SelectItem value="Data Analyst">Data Analyst</SelectItem>
+                                    <SelectItem value="Customer Success Manager">Customer Success Manager</SelectItem>
+
+                                    {/* Networking */}
+                                    <SelectItem value="Network Engineer">Network Engineer</SelectItem>
+                                    <SelectItem value="Network Architect">Network Architect</SelectItem>
+                                    <SelectItem value="Security Engineer">Security Engineer</SelectItem>
+                                    <SelectItem value="Cloud Network Engineer">Cloud Network Engineer</SelectItem>
+
+                                    {/* IaaS Roles */}
+                                    <SelectItem value="Cloud Engineer (IaaS)">Cloud Engineer (IaaS)</SelectItem>
+                                    <SelectItem value="Infrastructure Architect">Infrastructure Architect</SelectItem>
+                                    <SelectItem value="Infrastructure Operations Specialist">Infrastructure Operations Specialist</SelectItem>
+
+                                    {/* PaaS Roles */}
+                                    <SelectItem value="Platform Engineer (PaaS)">Platform Engineer (PaaS)</SelectItem>
+                                    <SelectItem value="Platform Architect">Platform Architect</SelectItem>
+
+                                    {/* SaaS Roles */}
+                                    <SelectItem value="SaaS Product Manager">SaaS Product Manager</SelectItem>
+                                    <SelectItem value="SaaS Implementation Specialist">SaaS Implementation Specialist</SelectItem>
+                                    <SelectItem value="SaaS Operations Engineer">SaaS Operations Engineer</SelectItem>
                                 </SelectContent>
                             </Select>
+
                             <Button type="submit">Create User</Button>
                         </form>
                     </CardContent>

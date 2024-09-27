@@ -1,18 +1,15 @@
 import { useAuth } from '@/contexts/AuthContext'
 
 export const useApi = () => {
-    const { sessionToken } = useAuth()
+    const { user } = useAuth()
 
     const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
         const headers = new Headers(options.headers || {})
         headers.set('Content-Type', 'application/json')
-        if (sessionToken) {
-            headers.set('Authorization', `Bearer ${sessionToken}`)
-        }
 
         const response = await fetch(url, {
             ...options,
-            credentials: 'include',
+            credentials: 'include', // Ensure cookies are included in the request
             headers,
         })
 

@@ -13,7 +13,6 @@ interface User {
 
 interface AuthContextType {
     user: User | null
-    sessionToken: string | null
     login: (email: string, password: string) => Promise<void>
     logout: () => void
     isLoading: boolean
@@ -23,36 +22,31 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null)
-    const [sessionToken, setSessionToken] = useState<string | null>(null)
     const [isLoading, setIsLoading] = useState(true)
     const router = useRouter()
 
+    // Use useEffect to check for stored user data in localStorage
     useEffect(() => {
         const storedUser = localStorage.getItem('user')
-        const storedToken = localStorage.getItem('sessionToken')
-        if (storedUser && storedToken) {
+        if (storedUser) {
             setUser(JSON.parse(storedUser))
-            setSessionToken(storedToken)
         }
         setIsLoading(false)
     }, [])
 
     const login = async (email: string, password: string) => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/admin/login`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
-                credentials: 'include'
+                credentials: 'include',  // Include credentials for cookie-based auth
             })
+
             if (response.ok) {
                 const data = await response.json()
                 setUser(data)
-                // Assuming the backend sends the session token in the response
-                const token = response.headers.get('X-Session-Token') || 'default-token'
-                setSessionToken(token)
-                localStorage.setItem('user', JSON.stringify(data))
-                localStorage.setItem('sessionToken', token)
+                localStorage.setItem('user', JSON.stringify(data)) // Store user data in localStorage
                 router.push('/dashboard')
             } else {
                 throw new Error('Login failed')
@@ -65,14 +59,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const logout = () => {
         localStorage.removeItem('user')
-        localStorage.removeItem('sessionToken')
         setUser(null)
-        setSessionToken(null)
         router.push('/login')
     }
 
     return (
-        <AuthContext.Provider value={{ user, sessionToken, login, logout, isLoading }}>
+        <AuthContext.Provider value={{ user, login, logout, isLoading }}>
             {children}
         </AuthContext.Provider>
     )
